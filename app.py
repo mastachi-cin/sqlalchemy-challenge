@@ -7,6 +7,7 @@ from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify
 
+import datetime as dt
 
 #################################################
 # Database Setup
@@ -39,8 +40,8 @@ def home():
         f"/api/v1.0/precipitation<br/>"
         f"/api/v1.0/stations<br/>"
         f"/api/v1.0/tobs<br/>"
-        f"/api/v1.0/<start><br/>"
-        f"/api/v1.0/<start>/<end>"
+        f"/api/v1.0/2015-01-01<br/>"
+        f"/api/v1.0/2015-01-01/2015-12-31"
     )
 
 
@@ -121,16 +122,16 @@ def start(start):
 
     session.close()
 
-     # Convert query results to a dictionary
-     temp_data = []
-     for min_temp, max_temp, avg_temp in results:
-         temp_dict = {}
-         temp_dict["min_temp"] = min_temp
-         temp_dict["max_temp"] = max_temp
-         temp_dict["avg_temp"] = avg_temp
-         temp_data.append(temp_dict)
+    # Convert query results to a dictionary
+    temp_data = []
+    for min_temp, max_temp, avg_temp in results:
+        temp_dict = {}
+        temp_dict["min_temp"] = min_temp
+        temp_dict["max_temp"] = max_temp
+        temp_dict["avg_temp"] = avg_temp
+        temp_data.append(temp_dict)
 
-     return jsonify(temp_data)
+    return jsonify(temp_data)
      
      
 @app.route("/api/v1.0/<start>/<end>")
